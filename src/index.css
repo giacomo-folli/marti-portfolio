@@ -1,0 +1,498 @@
+/* ====================================
+   Design System — Alex Cooper Portfolio
+   ==================================== */
+
+:root {
+  /* Fonts */
+  --font-serif: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  /* Colors — Cover */
+  --cover: #1d1b18;
+  --cover-soft: #2a2723;
+
+  /* Colors — Paper */
+  --paper: #ece6da;
+  --paper-warm: #e7e0d2;
+
+  /* Colors — Ink (text) */
+  --ink: #262220;
+  --ink-soft: #6b6258;
+
+  /* Colors — Accents */
+  --line: #cdc4b2;
+  --olive: #5e6249;
+  --olive-soft: #7b7e60;
+  --clay: #84715a;
+  --clay-soft: #9c8a72;
+  --gold: #b08d4f;
+
+  /* Tabs */
+  --tab-w: 60px;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #dcd3cb;
+  color: var(--ink);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+input:invalid, textarea:invalid {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+
+/* ====================================
+   Notebook Page (main container)
+   ==================================== */
+
+.notebook-wrapper {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  position: relative;
+}
+
+.notebook-page {
+  flex: 1;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.6s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* ===== Cover (Home) state ===== */
+.notebook-page.is-cover {
+  background-color: var(--cover);
+  background-image: url('/assets/leather.png');
+  background-size: cover;
+  background-position: center;
+  color: #efe9dc;
+}
+
+/* Leather grain overlay */
+.notebook-page.is-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,255,255,0.05), transparent 55%),
+    linear-gradient(160deg, var(--cover-soft), var(--cover) 60%);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+/* Noise texture overlay */
+.notebook-page.is-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ===== Open (inner pages) state ===== */
+.notebook-page.is-open {
+  background-color: var(--paper);
+  background-image: url('/assets/paper.png');
+  background-size: cover;
+  background-position: center;
+  color: var(--ink);
+}
+
+/* Paper grain overlay */
+.notebook-page.is-open::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+}
+
+/* ===== Binding edge (left spine) ===== */
+.binding-edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.is-cover .binding-edge {
+  background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.15) 40%, transparent);
+}
+
+.is-open .binding-edge {
+  background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.06) 40%, transparent);
+}
+
+/* ====================================
+   Corner Label
+   ==================================== */
+
+.corner-label {
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  z-index: 20;
+  transition: color 0.4s ease;
+}
+
+.is-cover .corner-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.is-open .corner-label {
+  color: var(--ink-soft);
+}
+
+/* ====================================
+   Tabs
+   ==================================== */
+
+.tabs-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--tab-w);
+  display: flex;
+  flex-direction: column;
+  z-index: 30;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  position: relative;
+}
+
+.tab-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.tab-number {
+  font-weight: 700;
+  opacity: 0.55;
+}
+
+/* Tab 01 — Portfolio */
+.tab[data-tab="portfolio"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* Tab 02 — About */
+.tab[data-tab="about"] {
+  background: #333333;
+  color: #e8e4dc;
+}
+
+/* Tab 03 — Contact */
+.tab[data-tab="contact"] {
+  background: #333333;
+  color: #e8e4dc;
+}
+
+.tab:hover {
+  filter: brightness(1.06);
+}
+
+.tab.active {
+  transform: translateX(-6px);
+  filter: brightness(1.1);
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--ink);
+}
+
+.tab[data-tab="about"].active::after,
+.tab[data-tab="contact"].active::after {
+  background: rgba(255,255,255,0.7);
+}
+
+/* ====================================
+   Clasp (Cover only)
+   ==================================== */
+
+.clasp-container {
+  position: absolute;
+  right: var(--tab-w);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+}
+
+.clasp-strap {
+  width: 70px;
+  height: 14px;
+  background: linear-gradient(180deg, #1a1715 0%, #0e0d0b 50%, #1a1715 100%);
+  border-radius: 2px 0 0 2px;
+  box-shadow:
+    0 3px 8px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+  position: relative;
+}
+
+/* Stitching on strap */
+.clasp-strap::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 8px;
+  right: 8px;
+  border: 1px dashed rgba(255,255,255,0.08);
+  border-radius: 1px;
+}
+
+.clasp-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #d4b06a, #b08d4f 50%, #8a6f3e 100%);
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.5),
+    inset 0 1px 2px rgba(255,255,255,0.3),
+    inset 0 -1px 2px rgba(0,0,0,0.3);
+  margin-left: -10px;
+  position: relative;
+}
+
+/* Center dot on clasp button */
+.clasp-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #c7a55a, #8a6f3e);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,0.3);
+}
+
+/* ====================================
+   Page Transitions
+   ==================================== */
+
+.page-transition-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+  min-height: 100vh;
+}
+
+.page-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: pageFadeIn 0.45s ease both;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ====================================
+   Inner pages shared chrome
+   ==================================== */
+
+.page-container {
+  height: 100%;
+  min-height: 100vh;
+  padding: 0 44px 30px;
+  padding-right: calc(44px + var(--tab-w));
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.page-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.page-container::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 10px;
+}
+
+/* ===== Shared typography ===== */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.section-rule {
+  width: 38px;
+  height: 2px;
+  background: var(--ink);
+  margin: 0 0 14px;
+}
+
+/* ====================================
+   Focus visibility
+   ==================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.tab:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* ====================================
+   Reduced motion
+   ==================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ====================================
+   Mobile Responsive
+   ==================================== */
+
+@media (max-width: 768px) {
+  :root {
+    --tab-w: 42px;
+  }
+
+  .notebook-page {
+    border-radius: 0;
+  }
+
+  .binding-edge {
+    width: 12px;
+  }
+
+  .corner-label {
+    left: 18px;
+    top: 12px;
+    font-size: 9px;
+  }
+
+  .tab-label {
+    font-size: 8px;
+    gap: 6px;
+  }
+
+  .clasp-container {
+    display: none;
+  }
+
+  .page-container {
+    padding: 0 20px 24px;
+    padding-right: calc(20px + var(--tab-w));
+  }
+}
