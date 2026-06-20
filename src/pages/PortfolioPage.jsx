@@ -10,6 +10,9 @@ const PortfolioPage = ({ onNavigate, currentPage }) => {
     { src: '/assets/img2.png', title: 'FLEETING TIME', year: '2022' },
     { src: '/assets/img3.png', title: 'COASTAL NOTES', year: '2022' },
     { src: '/assets/img1.png', title: 'ALCHEMY', year: '2021' },
+    { src: '/assets/img1.png', title: 'WILD LAND II', year: '2020' },
+    { src: '/assets/img2.png', title: 'IN BETWEEN II', year: '2020' },
+    { src: '/assets/img3.png', title: 'SILENT ROOMS II', year: '2019' },
   ];
 
   return (
