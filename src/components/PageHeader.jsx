@@ -1,32 +1,37 @@
-import React from 'react';
 import './PageHeader.css';
 
 const PageHeader = ({ onNavigate, currentPage }) => {
   return (
     <header className="page-header">
-      <div className="header-logo" onClick={() => onNavigate?.('home')}>
+      <button type="button" className="header-logo" onClick={() => onNavigate?.('home')} aria-label="Torna alla copertina">
         <span>ALEX</span><br/>
         <span>COOPER</span>
-      </div>
-      <nav className="header-nav">
-        <a
+      </button>
+      <nav className="header-nav" aria-label="Navigazione principale">
+        <button
+          type="button"
           className={currentPage === 'portfolio' ? 'active' : ''}
           onClick={() => onNavigate?.('portfolio')}
+          aria-current={currentPage === 'portfolio' ? 'page' : undefined}
         >
           Portfolio
-        </a>
-        <a
+        </button>
+        <button
+          type="button"
           className={currentPage === 'about' ? 'active' : ''}
           onClick={() => onNavigate?.('about')}
+          aria-current={currentPage === 'about' ? 'page' : undefined}
         >
           About me
-        </a>
-        <a
+        </button>
+        <button
+          type="button"
           className={currentPage === 'contact' ? 'active' : ''}
           onClick={() => onNavigate?.('contact')}
+          aria-current={currentPage === 'contact' ? 'page' : undefined}
         >
           Contattami
-        </a>
+        </button>
       </nav>
       <div className="menu-icon mono">Menu <span>≡</span></div>
     </header>
