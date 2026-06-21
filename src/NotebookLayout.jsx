@@ -1,11 +1,3 @@
-import React from 'react';
-
-const LABELS = {
-  home: 'HOME PAGE',
-  portfolio: '01. PORTFOLIO',
-  about: '02. ABOUT ME',
-  contact: '03. CONTATTAMI',
-};
 
 const NotebookLayout = ({ children, currentPage, onTabClick, pageKey }) => {
   const isHome = currentPage === 'home';
