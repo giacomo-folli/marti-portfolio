@@ -753,3 +753,96 @@ textarea:focus-visible,
     border-width: 10px;
   }
 }
+
+/* Fixed notebook stage: pages stay a consistent height while their content scrolls */
+.notebook-wrapper {
+  height: 100svh;
+  max-height: 100svh;
+  overflow: visible;
+}
+
+.notebook-page,
+.page-transition-container,
+.page-content {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.page-container,
+.portfolio-right-col {
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Keep the tab rail attached to the notebook instead of the viewport */
+.tabs-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
+
+/* Active tabs become part of the current sheet: same texture, no visible seam */
+.is-open ~ .tabs-container .tab.active {
+  background-color: var(--paper);
+  background-image:
+    url('/assets/paper.png'),
+    radial-gradient(ellipse at 14% 8%, rgba(255,255,255,0.48), transparent 36%),
+    linear-gradient(90deg, rgba(236,230,218,1) 0%, rgba(236,230,218,0.96) 62%, rgba(214,205,190,0.94) 100%);
+  background-size: cover, auto, auto;
+  border-color: rgba(38, 34, 32, 0.16);
+  border-left-color: transparent;
+  color: var(--ink);
+  margin-left: 0;
+  transform: none;
+  box-shadow:
+    4px 0 0 var(--paper),
+    inset 1px 1px 0 rgba(255,255,255,0.46),
+    inset -4px 0 9px rgba(57,47,37,0.08);
+}
+
+.is-open ~ .tabs-container .tab.active::before {
+  background-image:
+    url('/assets/paper.png'),
+    linear-gradient(90deg, rgba(236,230,218,0.92), rgba(236,230,218,0.28));
+  background-size: cover, auto;
+  opacity: 0.9;
+  mix-blend-mode: multiply;
+}
+
+.is-open ~ .tabs-container .tab.active::after {
+  border-top-color: rgba(38, 34, 32, 0.12);
+  border-bottom-color: rgba(38, 34, 32, 0.12);
+  box-shadow:
+    7px 0 0 var(--paper),
+    inset 3px 0 5px rgba(57,47,37,0.06);
+}
+
+@media (min-width: 900px) {
+  .notebook-wrapper {
+    height: min(760px, calc(100svh - 84px));
+    max-height: min(760px, calc(100svh - 84px));
+    min-height: min(760px, calc(100svh - 84px));
+  }
+}
+
+@media (max-width: 768px) {
+  .notebook-wrapper {
+    height: 100svh;
+    max-height: 100svh;
+  }
+
+  .tabs-container {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+  }
+
+  .is-open ~ .tabs-container .tab.active {
+    box-shadow:
+      3px 0 0 var(--paper),
+      inset 1px 1px 0 rgba(255,255,255,0.42),
+      inset -3px 0 7px rgba(57,47,37,0.08);
+  }
+}
