@@ -30,6 +30,9 @@
 
   /* Tabs */
   --tab-w: 60px;
+  --tab-bg: #9e9687;
+  --tab-bg-hover: #a89f90;
+  --tab-text: #3a3530;
 }
 
 /* ===== Reset ===== */
@@ -124,6 +127,7 @@ input:invalid, textarea:invalid {
   background-size: cover;
   background-position: center;
   color: #efe9dc;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.3);
 }
 
 /* Leather grain overlay */
@@ -182,7 +186,11 @@ input:invalid, textarea:invalid {
 }
 
 .is-cover .binding-edge {
-  background: linear-gradient(to right, rgba(0,0,0,0.5), rgba(0,0,0,0.15) 40%, transparent);
+  background: linear-gradient(to right,
+    rgba(0,0,0,0.6) 0%,
+    rgba(0,0,0,0.25) 35%,
+    rgba(0,0,0,0.08) 60%,
+    transparent 100%);
 }
 
 .is-open .binding-edge {
@@ -226,6 +234,9 @@ input:invalid, textarea:invalid {
   display: flex;
   flex-direction: column;
   z-index: 30;
+  /* Thin dark notebook back — visible as a sliver behind the tabs */
+  background: #1a1816;
+  padding: 6px 0;
 }
 
 .tab {
@@ -233,72 +244,109 @@ input:invalid, textarea:invalid {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 0;
   cursor: pointer;
   border: none;
-  border-radius: 0;
-  transition: transform 0.25s ease, filter 0.25s ease;
   position: relative;
+  background: var(--tab-bg);
+  color: var(--tab-text);
+  border-radius: 0 4px 4px 0;
+  /* Left margin reveals thin dark spine behind */
+  margin-left: 5px;
+  box-shadow:
+    -2px 1px 4px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  transition: margin-left 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background-color 0.35s ease,
+              box-shadow 0.35s ease,
+              filter 0.25s ease;
+}
+
+/* Paper/cardboard grain texture */
+.tab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+
+/* Gap between tabs — dark spine peeks through */
+.tab + .tab {
+  margin-top: 2px;
 }
 
 .tab-label {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-family: var(--font-mono);
-  font-size: 9.5px;
+  font-size: 9px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   white-space: nowrap;
+  text-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.08);
 }
 
 .tab-number {
   font-weight: 700;
-  opacity: 0.55;
+  opacity: 0.45;
+  font-size: 8px;
 }
 
-/* Tab 01 — Portfolio */
+/* Tab color variations — slight differences like real paper tabs */
 .tab[data-tab="portfolio"] {
+  background: #a8a092;
+}
+
+.tab[data-tab="about"] {
+  background: #9e9687;
+}
+
+.tab[data-tab="contact"] {
+  background: #948c7e;
+}
+
+/* ---- Hover ---- */
+.tab:hover:not(.active) {
+  filter: brightness(1.06);
+  margin-left: 3px;
+  box-shadow:
+    -3px 1px 6px rgba(0, 0, 0, 0.25),
+    0 1px 3px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* ---- Active tab — blends into the page ---- */
+.tab.active {
+  /* Flush with the page — no left margin, no left gap */
+  margin-left: 0;
+  border-radius: 0 4px 4px 0;
+  /* Remove left shadow so it seamlessly connects */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  filter: none;
+  z-index: 1;
+}
+
+/* When on inner pages (paper) — active tab matches paper */
+.is-open ~ .tabs-container .tab.active {
   background: var(--paper);
   color: var(--ink);
 }
 
-/* Tab 02 — About */
-.tab[data-tab="about"] {
-  background: #333333;
-  color: #e8e4dc;
-}
-
-/* Tab 03 — Contact */
-.tab[data-tab="contact"] {
-  background: #333333;
-  color: #e8e4dc;
-}
-
-.tab:hover {
-  filter: brightness(1.06);
-}
-
-.tab.active {
-  transform: translateX(-6px);
-  filter: brightness(1.1);
-}
-
-.tab.active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--ink);
-}
-
-.tab[data-tab="about"].active::after,
-.tab[data-tab="contact"].active::after {
-  background: rgba(255,255,255,0.7);
+/* When on cover — active tab matches cover (unlikely but safe) */
+.is-cover ~ .tabs-container .tab.active {
+  background: var(--cover-soft);
+  color: #efe9dc;
 }
 
 /* ====================================
@@ -310,19 +358,25 @@ input:invalid, textarea:invalid {
   right: var(--tab-w);
   top: 50%;
   transform: translateY(-50%);
-  z-index: 20;
+  z-index: 25;
   display: flex;
   align-items: center;
 }
 
 .clasp-strap {
-  width: 70px;
-  height: 14px;
-  background: linear-gradient(180deg, #1a1715 0%, #0e0d0b 50%, #1a1715 100%);
-  border-radius: 2px 0 0 2px;
+  width: 80px;
+  height: 16px;
+  background: linear-gradient(180deg,
+    #2a2520 0%,
+    #1a1715 30%,
+    #0e0d0b 50%,
+    #1a1715 70%,
+    #2a2520 100%);
+  border-radius: 3px 0 0 3px;
   box-shadow:
-    0 3px 8px rgba(0,0,0,0.5),
-    inset 0 1px 0 rgba(255,255,255,0.06);
+    0 4px 10px rgba(0,0,0,0.55),
+    0 1px 3px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.07);
   position: relative;
 }
 
@@ -330,25 +384,51 @@ input:invalid, textarea:invalid {
 .clasp-strap::before {
   content: '';
   position: absolute;
-  top: 3px;
-  bottom: 3px;
-  left: 8px;
-  right: 8px;
-  border: 1px dashed rgba(255,255,255,0.08);
+  top: 4px;
+  bottom: 4px;
+  left: 10px;
+  right: 6px;
+  border: 1px dashed rgba(255,255,255,0.06);
   border-radius: 1px;
 }
 
+/* Strap shadow on cover surface */
+.clasp-strap::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), transparent);
+  pointer-events: none;
+}
+
 .clasp-button {
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #d4b06a, #b08d4f 50%, #8a6f3e 100%);
+  background: radial-gradient(circle at 38% 35%,
+    #dbb96f 0%,
+    #c9a45a 30%,
+    #b08d4f 55%,
+    #8a6f3e 100%);
   box-shadow:
-    0 2px 6px rgba(0,0,0,0.5),
-    inset 0 1px 2px rgba(255,255,255,0.3),
-    inset 0 -1px 2px rgba(0,0,0,0.3);
-  margin-left: -10px;
+    0 3px 8px rgba(0,0,0,0.55),
+    0 1px 2px rgba(0,0,0,0.3),
+    inset 0 2px 3px rgba(255,255,255,0.35),
+    inset 0 -2px 3px rgba(0,0,0,0.25);
+  margin-left: -12px;
   position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.clasp-button:hover {
+  box-shadow:
+    0 3px 10px rgba(0,0,0,0.6),
+    0 1px 3px rgba(0,0,0,0.35),
+    inset 0 2px 4px rgba(255,255,255,0.4),
+    inset 0 -2px 3px rgba(0,0,0,0.25);
 }
 
 /* Center dot on clasp button */
@@ -358,11 +438,16 @@ input:invalid, textarea:invalid {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #c7a55a, #8a6f3e);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.3);
+  background: radial-gradient(circle at 42% 38%,
+    #d4b06a 0%,
+    #a88540 60%,
+    #8a6f3e 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(0,0,0,0.35),
+    0 0.5px 0 rgba(255,255,255,0.15);
 }
 
 /* ====================================
@@ -485,12 +570,35 @@ textarea:focus-visible,
   }
 
   .tab-label {
-    font-size: 8px;
-    gap: 6px;
+    font-size: 7.5px;
+    gap: 5px;
+  }
+
+  .tab {
+    margin-left: 4px;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .tab + .tab {
+    margin-top: 1px;
+  }
+
+  .tab.active {
+    margin-left: 0;
   }
 
   .clasp-container {
     display: none;
+  }
+
+  .clasp-strap {
+    width: 50px;
+    height: 12px;
+  }
+
+  .clasp-button {
+    width: 28px;
+    height: 28px;
   }
 
   .page-container {
