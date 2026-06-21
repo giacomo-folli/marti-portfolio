@@ -29,7 +29,7 @@ const AboutPage = ({ onNavigate, currentPage }) => {
         {/* Center column — Portrait */}
         <div className="about-column about-col-center">
           <div className="about-portrait">
-            <img src="/assets/about.png" alt="Alex Cooper" />
+            <img src="/marti-portfolio/assets/about.png" alt="Alex Cooper" />
           </div>
         </div>
 

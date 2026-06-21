@@ -35,7 +35,7 @@ const ContactPage = ({ onNavigate, currentPage }) => {
               </svg>
             </div>
             <div className="polaroid-frame">
-              <img src="/assets/polaroid.png" alt="Polaroid memory" />
+              <img src="/marti-portfolio/assets/polaroid.png" alt="Polaroid memory" />
             </div>
           </div>
 
