@@ -1,13 +1,13 @@
 export const person = {
-  name: 'ALEX COOPER',
-  firstName: 'ALEX',
-  lastName: 'COOPER',
+  name: 'MARTINA PAGLIARA',
+  firstName: 'MARTINA',
+  lastName: 'PAGLIARA',
   role: 'Visual storyteller',
   email: 'hello@alexcooper.com',
   instagram: '@alexcooper.visuals',
-  location: 'Milan, Italy',
+  location: 'Parma, Italy',
   portraitSrc: '/marti-portfolio/assets/about.png',
-  portraitAlt: 'Alex Cooper',
+  portraitAlt: 'Martina Pagliara',
 };
 
 export const home = {
