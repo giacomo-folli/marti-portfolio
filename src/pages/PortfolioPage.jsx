@@ -1,48 +1,50 @@
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import PageHeader from '../components/PageHeader';
+import { portfolio } from '../data/siteData';
 import './PortfolioPage.css';
 
 const PortfolioPage = ({ onNavigate, currentPage }) => {
-  const images = [
-    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND', year: '2024' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN', year: '2023' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS', year: '2023' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'FLEETING TIME', year: '2022' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'COASTAL NOTES', year: '2022' },
-    { src: '/marti-portfolio/assets/img1.png', title: 'ALCHEMY', year: '2021' },
-    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND II', year: '2020' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN II', year: '2020' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS II', year: '2019' },
-  ];
+  const [selectedIdx, setSelectedIdx] = useState(null);
+  const images = portfolio.images;
+
+  const prev = () => setSelectedIdx((i) => (i - 1 + images.length) % images.length);
+  const next = () => setSelectedIdx((i) => (i + 1) % images.length);
+
+  useEffect(() => {
+    if (selectedIdx === null) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape')     setSelectedIdx(null);
+      if (e.key === 'ArrowLeft')  prev();
+      if (e.key === 'ArrowRight') next();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedIdx]);
 
   return (
     <div className="page-container portfolio-page">
       <PageHeader onNavigate={onNavigate} currentPage={currentPage} />
 
       <div className="portfolio-content">
-        {/* Left Column — Sidebar */}
         <div className="portfolio-left-col">
           <div className="portfolio-sidebar-content">
             <h1 className="portfolio-title">Portfolio</h1>
             <div className="section-rule" />
-            <p className="portfolio-description">
-              Una selezione di storie
-              visive che ho avuto il privilegio
-              di raccontare.
-            </p>
+            <p className="portfolio-description">{portfolio.description}</p>
           </div>
 
           <div className="scroll-hint mono">
-            <span>Scorri per esplorare</span>
+            <span>{portfolio.scrollHint}</span>
             <span className="scroll-arrow">↓</span>
           </div>
         </div>
 
-        {/* Right Column — Grid */}
         <div className="portfolio-right-col">
           <div className="portfolio-grid">
             {images.map((img, idx) => (
               <div key={idx} className="portfolio-item">
-                <div className="img-wrapper">
+                <div className="img-wrapper" onClick={() => setSelectedIdx(idx)}>
                   <img src={img.src} alt={img.title} />
                 </div>
                 <div className="item-meta">
@@ -54,6 +56,22 @@ const PortfolioPage = ({ onNavigate, currentPage }) => {
           </div>
         </div>
       </div>
+
+      {selectedIdx !== null && createPortal((() => {
+        const img = images[selectedIdx];
+        return (
+          <div className="lightbox" onClick={() => setSelectedIdx(null)}>
+            <button className="lightbox-arrow lightbox-prev" onClick={(e) => { e.stopPropagation(); prev(); }}>‹</button>
+            <img src={img.src} alt={img.title} onClick={(e) => e.stopPropagation()} />
+            <button className="lightbox-arrow lightbox-next" onClick={(e) => { e.stopPropagation(); next(); }}>›</button>
+            <button className="lightbox-close" onClick={() => setSelectedIdx(null)}>✕</button>
+            <div className="lightbox-caption mono">
+              <span>{img.title}</span>
+              <span>{img.year}</span>
+            </div>
+          </div>
+        );
+      })(), document.body)}
     </div>
   );
 };

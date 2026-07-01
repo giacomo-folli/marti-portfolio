@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import PageHeader from '../components/PageHeader';
+import { person, contact } from '../data/siteData';
 import './ContactPage.css';
 
 const ContactPage = ({ onNavigate, currentPage }) => {
@@ -12,19 +13,20 @@ const ContactPage = ({ onNavigate, currentPage }) => {
     setTimeout(() => setSent(false), 3500);
   };
 
+  const [introLine1, introLine2, introLine3] = contact.intro.split('\n');
+
   return (
     <div className="page-container contact-page">
       <PageHeader onNavigate={onNavigate} currentPage={currentPage} />
-      
+
       <div className="contact-content">
-        {/* Left column */}
         <div className="contact-left">
-          <h1 className="contact-title">Contattami</h1>
+          <h1 className="contact-title">{contact.title}</h1>
           <div className="section-rule" />
           <p className="contact-intro">
-            Hai un progetto in mente?<br/>
-            Scrivimi, sarò felice<br/>
-            di sentirti.
+            {introLine1}<br/>
+            {introLine2}<br/>
+            {introLine3}
           </p>
 
           <div className="polaroid-wrapper">
@@ -35,27 +37,26 @@ const ContactPage = ({ onNavigate, currentPage }) => {
               </svg>
             </div>
             <div className="polaroid-frame">
-              <img src="/marti-portfolio/assets/polaroid.png" alt="Polaroid memory" />
+              <img src={contact.polaroidSrc} alt="Polaroid memory" />
             </div>
           </div>
 
           <div className="contact-info mono">
             <div className="info-block">
               <span className="info-label">Email</span>
-              <span className="info-value">hello@alexcooper.com</span>
+              <span className="info-value">{person.email}</span>
             </div>
             <div className="info-block">
               <span className="info-label">Instagram</span>
-              <span className="info-value">@alexcooper.visuals</span>
+              <span className="info-value">{person.instagram}</span>
             </div>
             <div className="info-block">
               <span className="info-label">Location</span>
-              <span className="info-value">Milan, Italy</span>
+              <span className="info-value">{person.location}</span>
             </div>
           </div>
         </div>
 
-        {/* Right column — Form */}
         <form className="contact-form" onSubmit={handleSubmit} aria-label="Contact form">
           <div className="form-field">
             <label htmlFor="nome">Nome</label>
@@ -82,7 +83,7 @@ const ContactPage = ({ onNavigate, currentPage }) => {
             </button>
           </div>
           <div className={`sent-note mono ${sent ? 'show' : ''}`}>
-            Messaggio inviato. Grazie!
+            {contact.successMessage}
           </div>
         </form>
       </div>
