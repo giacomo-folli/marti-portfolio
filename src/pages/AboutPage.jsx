@@ -37,6 +37,16 @@ const AboutPage = ({ onNavigate, currentPage }) => {
           </blockquote>
         </div>
       </div>
+
+      <div className="about-sections">
+        {about.sections.map((section) => (
+          <section key={section.title} className="about-section">
+            <div className="section-rule" />
+            <h2 className="about-section-title">{section.title}</h2>
+            <p className="about-section-body">{section.body}</p>
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

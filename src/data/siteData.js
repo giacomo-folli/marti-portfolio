@@ -25,21 +25,36 @@ export const about = {
   ],
   quote: '"Raccontare storie vere,\ncon uno sguardo gentile\ne intenzionale."',
   links: ['La mia storia', 'Il mio percorso', 'Ispirazioni'],
+  sections: [
+    {
+      title: 'La mia storia',
+      body: 'Ho iniziato a fotografare per fermare i momenti che avevo paura di dimenticare. Quel gesto istintivo è diventato negli anni un linguaggio: un modo per dare forma a ciò che sento e per guardare il mondo con più attenzione.',
+    },
+    {
+      title: 'Il mio percorso',
+      body: 'Dalla formazione artistica ai primi reportage, fino ai progetti con brand e creativi, ogni tappa ha affinato il mio sguardo. Oggi lavoro tra ritratto, still life e narrazione visiva, cercando sempre autenticità prima che perfezione.',
+    },
+    {
+      title: 'Ispirazioni',
+      body: 'La luce naturale, il cinema, i piccoli gesti quotidiani e i silenzi tra le persone. Mi ispira tutto ciò che è imperfetto e vivo: è lì che trovo le storie che vale la pena raccontare.',
+    },
+  ],
 };
 
 export const portfolio = {
   description: 'Una selezione di storie visive che ho avuto il privilegio di raccontare.',
   scrollHint: 'Scorri per esplorare',
+  collections: ['B&W', 'Portraits', 'Nature'],
   images: [
-    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND', year: '2024' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN', year: '2023' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS', year: '2023' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'FLEETING TIME', year: '2022' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'COASTAL NOTES', year: '2022' },
-    { src: '/marti-portfolio/assets/img1.png', title: 'ALCHEMY', year: '2021' },
-    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND II', year: '2020' },
-    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN II', year: '2020' },
-    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS II', year: '2019' },
+    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND', year: '2024', collection: 'Nature', selected: true },
+    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN', year: '2023', collection: 'Portraits', selected: true },
+    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS', year: '2023', collection: 'B&W' },
+    { src: '/marti-portfolio/assets/img2.png', title: 'FLEETING TIME', year: '2022', collection: 'Portraits' },
+    { src: '/marti-portfolio/assets/img3.png', title: 'COASTAL NOTES', year: '2022', collection: 'Nature', selected: true },
+    { src: '/marti-portfolio/assets/img1.png', title: 'ALCHEMY', year: '2021', collection: 'B&W' },
+    { src: '/marti-portfolio/assets/img1.png', title: 'WILD LAND II', year: '2020', collection: 'Nature' },
+    { src: '/marti-portfolio/assets/img2.png', title: 'IN BETWEEN II', year: '2020', collection: 'Portraits' },
+    { src: '/marti-portfolio/assets/img3.png', title: 'SILENT ROOMS II', year: '2019', collection: 'B&W' },
   ],
 };
 

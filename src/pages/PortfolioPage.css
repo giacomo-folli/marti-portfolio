@@ -43,6 +43,54 @@
   max-width: 220px;
 }
 
+/* ===== Collections Filter ===== */
+.collections {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.collections-label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+
+.collection-chip {
+  background: none;
+  border: none;
+  padding: 2px 0;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.collection-chip:hover { color: var(--ink); }
+
+.collection-chip.is-active {
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+/* ===== Right-Column Sections ===== */
+.portfolio-section + .portfolio-section {
+  margin-top: 36px;
+}
+
+.section-heading {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
 /* ===== Scroll Cue ===== */
 .scroll-hint {
   font-size: 10px;

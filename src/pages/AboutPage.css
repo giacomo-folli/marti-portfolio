@@ -90,6 +90,29 @@
   border: none;
 }
 
+/* Story sections */
+.about-sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px;
+  padding: 10px 0 20px;
+}
+
+.about-section-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: 14px 0 10px;
+}
+
+.about-section-body {
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
 /* ===== Mobile ===== */
 @media (max-width: 768px) {
   .about-content {
@@ -103,6 +126,11 @@
 
   .about-title {
     font-size: 32px;
+  }
+
+  .about-sections {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .about-quote {
