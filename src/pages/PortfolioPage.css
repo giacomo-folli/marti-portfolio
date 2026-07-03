@@ -91,6 +91,40 @@
   margin: 0 0 16px;
 }
 
+/* ===== Featured "Selected photos" section — notebook inset ===== */
+.portfolio-section.is-featured {
+  padding: 20px 22px 24px;
+  background: var(--paper-warm);
+  border-top: 2px solid var(--gold);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+/* ruled margin line, like a notebook page */
+.portfolio-section.is-featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 22px;
+  width: 1px;
+  background: var(--line);
+}
+
+.portfolio-section.is-featured .section-heading {
+  color: var(--ink);
+  padding-left: 14px;
+}
+
+.featured-star {
+  color: var(--gold);
+  margin-right: 5px;
+}
+
+.portfolio-section.is-featured .portfolio-grid {
+  padding-left: 14px;
+}
+
 /* ===== Scroll Cue ===== */
 .scroll-hint {
   font-size: 10px;

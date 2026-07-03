@@ -95,6 +95,11 @@
 .info-value {
   color: var(--ink);
   font-weight: 400;
+  text-decoration: none;
+}
+
+a.info-value:hover {
+  text-decoration: underline;
 }
 
 /* ===== Form ===== */

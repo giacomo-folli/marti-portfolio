@@ -44,11 +44,11 @@ const ContactPage = ({ onNavigate, currentPage }) => {
           <div className="contact-info mono">
             <div className="info-block">
               <span className="info-label">Email</span>
-              <span className="info-value">{person.email}</span>
+              <a className="info-value" href={`mailto:${person.email}`}>{person.email}</a>
             </div>
             <div className="info-block">
               <span className="info-label">Instagram</span>
-              <span className="info-value">{person.instagram}</span>
+              <a className="info-value" href={`https://instagram.com/${person.instagram.replace(/^@/, '')}`} target="_blank" rel="noreferrer">{person.instagram}</a>
             </div>
             <div className="info-block">
               <span className="info-label">Location</span>

@@ -77,8 +77,10 @@ const PortfolioPage = ({ onNavigate, currentPage }) => {
 
         <div className="portfolio-right-col">
           {filter === null && selected.length > 0 && (
-            <section className="portfolio-section">
-              <h2 className="section-heading mono">Selected photos</h2>
+            <section className="portfolio-section is-featured">
+              <h2 className="section-heading mono">
+                <span className="featured-star">★</span> Selected photos
+              </h2>
               {grid(selected)}
             </section>
           )}
